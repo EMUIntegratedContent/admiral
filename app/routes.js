@@ -18,7 +18,7 @@ module.exports = function(app, passport, acl){
   app.get('/', function(req, res){
 
     var socketio = req.app.get('socketio');
-    socketio.emit('send', {message: 'urdum'});
+    socketio.sockets.emit('send', {message: 'urdum'});
 
     //https://stackoverflow.com/questions/14103615/mongoose-get-full-list-of-users/14103703
     User.find({}, function(err, users) {

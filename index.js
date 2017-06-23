@@ -30,10 +30,10 @@ app.set('server', server) // optional
 
 
 app.listen(3000);
-server.listen(3001) // <-- socket port
-app.get('server').listen(3001)
+server.listen(3700) // <-- socket port
+//app.get('server').listen(3001)
 
-io.on('connection', function (socket) {
+io.sockets.on('connection', function (socket) {
     console.log("Socket connected on port " + port)
 
     socket.emit('message', { message: 'welcome to the chat' })
@@ -41,7 +41,7 @@ io.on('connection', function (socket) {
         console.log("WAFFLES")
         io.sockets.emit('message', data);
     });
-  
+
 });
 
 // create reusable transporter object using the default SMTP transport
