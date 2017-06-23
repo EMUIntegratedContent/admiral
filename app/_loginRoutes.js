@@ -1,5 +1,3 @@
-var UserMail = require('../app/UserMail')
-
 module.exports = function(app, passport){
   // =====================================
   // GOOGLE ROUTES =======================

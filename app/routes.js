@@ -30,7 +30,7 @@ module.exports = function(app, passport, acl, mongoose){
     })
   })
 
-  app.get('/mail/fetchimail', (req, res) => {
+  app.get('/api/mail/fetchimail', (req, res) => {
     IMail.find({'recipients': { $in: [mongoose.Types.ObjectId(req.session.passport.user)] }}, (err, imails) => {
       if (err) {
          return res.status(400).end();
@@ -39,7 +39,7 @@ module.exports = function(app, passport, acl, mongoose){
     });
   });
 
-  app.get('/mail/fetchimailcount', (req, res) => {
+  app.get('/api/mail/fetchimailcount', (req, res) => {
     IMail.count({'recipients': { $in: [mongoose.Types.ObjectId(req.session.passport.user)] }}, (err, imails) => {
       if (err) {
          return res.status(400).end();
@@ -47,6 +47,17 @@ module.exports = function(app, passport, acl, mongoose){
       res.json(imails);
     });
   });
+
+  app.get('/imail/:imailId', (req, res) =>{
+    IMail.findById(req.params.imailId, (err, imail) => {
+      if (err) {
+         return res.status(400).end();
+      }
+      res.render('system_modules/imail/imail_single', {
+        imail: imail
+      });
+    });
+  })
 }
 
 // Route middleware to make sure a user is logged in

@@ -5,8 +5,6 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 // load up the user model
 var User            = require('../app/models/user');
 var IMail           = require('../app/models/imail');
-var MessageObserver = require('../app/MessageObserver')
-var UserMail = require('../app/UserMail')
 
 // load the auth variables
 var configAuth = require('./auth');
@@ -105,7 +103,7 @@ module.exports = function(passport, transporter, acl){
                 // If a user has been found, send that admin an IMail
                 // send the user an internal mail (IMail)
                 var iMail = new IMail()
-                iMail.body = newUser.google.name + ' needs approval.',
+                iMail.body = newUser.google.name + ' needs approval. Please go to the <a href="/admin/permissions">permissions center</a> to manage this user.',
 
                 // Send administrator a notification that a new user needs approval
                 iMail.recipients.push(user.id)
@@ -114,9 +112,6 @@ module.exports = function(passport, transporter, acl){
                 iMail.save(function(err){
                   if(err)
                     return err
-
-                  var notification = new UserMail(user)
-                  notification.sendMessage()
 
                   console.log("IMail was sent to notify admin " + user.google.name + " to approve " + newUser.google.name + " as a system user.")
                 })

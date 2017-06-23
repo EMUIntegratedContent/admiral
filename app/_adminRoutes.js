@@ -8,27 +8,13 @@ module.exports = function(app, acl){
 
 
 
-  app.get('/admin/roles', acl.middleware(), function(req,res){
-
+  //app.get('/admin/permissions', acl.middleware(), function(req,res){
+  app.get('/admin/permissions', function(req,res){
       User.find({}, function(err, users) {
         if(err)
           return err;
 
-        var pageTitle = "User Permissions"
-
-        var scope = {
-          data: {
-              users: users,
-              pageTitle: pageTitle
-          },
-          vue: {
-              head: {
-                  title: pageTitle,
-              },
-              components: ['users']
-          }
-        }
-        res.render('admin/permissions', scope)
+        res.render('admin/permissions')
       })
   });
 

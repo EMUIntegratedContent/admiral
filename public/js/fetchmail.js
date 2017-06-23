@@ -11,7 +11,7 @@ window.onload = function() {
         interval = 5000;
 
     function fetchIMail(){
-      fetch('http://localhost:3700/mail/fetchimail', {credentials: 'include'}).then((response) => {
+      fetch('http://localhost:3700/api/mail/fetchimail', {credentials: 'include'}).then((response) => {
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.indexOf("application/json") !== -1) {
            return response.json().then(json => {
@@ -25,7 +25,7 @@ window.onload = function() {
       }).then((imails) => {
         // do what you want with imails
         for(var i=0; i<imails.length; i++) {
-          $('<li class="imail-list-item"><a href="#">'+ imails[i].body +'</a></li>').insertBefore('#full-inbox-li')
+          $('<li class="imail-list-item"><a href="/imail/'+ imails[i]._id +'">'+ imails[i].body +'</a></li>').insertBefore('#full-inbox-li')
         }
       }).catch((err) => {
         console.log(err)
@@ -33,7 +33,7 @@ window.onload = function() {
     }
 
     function fetchIMailCount(){
-      fetch('http://localhost:3700/mail/fetchimailcount', {credentials: 'include'}).then((response) => {
+      fetch('http://localhost:3700/api/mail/fetchimailcount', {credentials: 'include'}).then((response) => {
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.indexOf("application/json") !== -1) {
            return response.json().then(json => {
