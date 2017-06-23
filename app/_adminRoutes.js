@@ -14,7 +14,28 @@ module.exports = function(app, acl){
         if(err)
           return err;
 
-        res.render('admin/permissions')
+        var pageTitle = "Permission Center"
+        var scope = {
+            data: {
+                title: pageTitle
+            },
+            vue: {
+                head: {
+                    title: pageTitle,
+                    structuredData: {
+                        "@context": "http://schema.org",
+                        "@type": "Organization",
+                        "url": "http://www.your-company-site.com",
+                        "contactPoint": [{
+                            "@type": "ContactPoint",
+                            "telephone": "+1-401-555-1212",
+                            "contactType": "customer service"
+                        }]
+                    }
+                }
+            }
+        };
+        res.render('admin/permissions', scope)
       })
   });
 

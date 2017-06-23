@@ -88,9 +88,14 @@ io.on('connection', function (socket) {
 
 require('./config/passport')(passport, transporter, acl); // pass passport for configuration
 
-//app.set('views', __dirname + '/tpl');
 app.use(express.static(__dirname + '/public'));
-app.set('view engine', 'ejs'); // set up ejs for templating
+app.engine('vue', expressVue);
+app.set('view engine', 'vue');
+app.set('views', path.join(__dirname, '/views'));
+app.set('vue', {
+    componentsDir: path.join(__dirname, '/views/components'),
+    defaultLayout: 'layout'
+});
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console

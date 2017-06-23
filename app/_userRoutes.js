@@ -73,10 +73,40 @@ module.exports = function(app){
   });
 
   app.get('/profile', isLoggedIn, function(req, res){
+    var pageTitle = req.user.google.name + "'s Profile'"
+    var scope = {
+        data: {
+            title: pageTitle,
+            user: req.user
+        },
+        vue: {
+            head: {
+                title: pageTitle,
+                meta: [
+                    { property:'og:title', content: pageTitle},
+                    { name:'twitter:title', content: pageTitle}
+                ],
+                structuredData: {
+                    "@context": "http://schema.org",
+                    "@type": "Organization",
+                    "url": "http://www.your-company-site.com",
+                    "contactPoint": [{
+                        "@type": "ContactPoint",
+                        "telephone": "+1-401-555-1212",
+                        "contactType": "customer service"
+                    }]
+                }
+            }
+        }
+    };
+
+    res.render('user', scope)
+    /*
     res.render('user', {
         isAuthenticated: req.isAuthenticated,
         user: req.user  // get the user out of session and pass to template
     })
+    */
   })
 }
 
