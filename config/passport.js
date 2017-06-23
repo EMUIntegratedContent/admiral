@@ -51,10 +51,7 @@ module.exports = function(passport, transporter, acl){
           return done(err)
 
         if(user){
-          // if a user is found,
-          // Set the user up with a series of event listeners throughout the session
-          // Finally, log user in
-          //io.sockets.emit('send', {message: 'buffalo'})
+          // if a user is found log user in
           return done(null, user)
         } else {
 
@@ -88,13 +85,15 @@ module.exports = function(passport, transporter, acl){
               html: '<h2>You have just signed into Admiral for the first time.</h2><p>Following administration approval, you will receive another email allowing you to access the system.</p>' // html body
           };
           // send mail with defined transport object
+          /*
           transporter.sendMail(mailOptions, (error, info) => {
               if (error) {
                   return console.log(error);
               }
               console.log('Message %s sent: %s', info.messageId, info.response);
           });
-          /*
+          */
+
           // Send an email to all "admin-level" users to activate this user.
           acl.roleUsers('admin', function(err, users){
             // Loop through all admin users
@@ -124,7 +123,6 @@ module.exports = function(passport, transporter, acl){
               })
             })
           })
-          */
         }
       })
     })

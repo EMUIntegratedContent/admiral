@@ -24,14 +24,6 @@ module.exports = function(app, passport){
   app.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect : '/' }),
     function(req,res){
-      /*
-      console.group('Cookies: ')
-      console.log(req.cookies);
-      console.groupEnd();
-
-      var tom = new UserMail(req.user)
-      tom.sendMessage()
-      */
       res.redirect('/profile')
     }
   );

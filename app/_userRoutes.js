@@ -74,10 +74,8 @@ module.exports = function(app){
 
   app.get('/profile', isLoggedIn, function(req, res){
     res.render('user', {
-      data: {
-          title: 'Hello My Name is',
-          user: req.user  // get the user out of session and pass to template
-      }
+        isAuthenticated: req.isAuthenticated,
+        user: req.user  // get the user out of session and pass to template
     })
   })
 }

@@ -28,22 +28,6 @@ var io = socketio.listen(server)
 app.set('socketio', io) // bind socket to app
 app.set('server', server) // optional
 
-
-app.listen(3000);
-server.listen(3700) // <-- socket port
-//app.get('server').listen(3001)
-
-io.sockets.on('connection', function (socket) {
-    console.log("Socket connected on port " + port)
-
-    socket.emit('message', { message: 'welcome to the chat' })
-    socket.on('send', function (data) {
-        console.log("WAFFLES")
-        io.sockets.emit('message', data);
-    });
-
-});
-
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
   service: "Gmail",
@@ -77,18 +61,36 @@ acl.roleUsers('admin', function(err, users){
   console.log(err)
 })
 */
+app.listen(3000);
+server.listen(3700) // <-- socket port
 
+io.on('connection', function (socket) {
+    //socket.emit('message', { message: 'welcome to the chat' })
+    var IMail = require('./app/models/imail')
+    socket.on('fetchIMail', function (data) {
+        IMail.find({}, (err, imails) => {
+          if (err) {
+             io.sockets.emit('deliverIMail', {error: err});
+          }
+          io.sockets.emit('deliverIMail', {imail: imails});
+        });
+    });
+    socket.on('fetchIMailCount', function (data) {
+        IMail.count({}, (err, numImails) => {
+          if (err) {
+             io.sockets.emit('deliverIMailCount', {error: err});
+          }
+          io.sockets.emit('deliverIMailCount', {count: numImails});
+        });
+    });
+});
 
 
 require('./config/passport')(passport, transporter, acl); // pass passport for configuration
 
-app.engine('vue', expressVue);
-app.set('view engine', 'vue');
-app.set('views', path.join(__dirname, '/views'));
-app.set('vue', {
-    componentsDir: path.join(__dirname, '/views/components'),
-    defaultLayout: 'layout'
-});
+//app.set('views', __dirname + '/tpl');
+app.use(express.static(__dirname + '/public'));
+app.set('view engine', 'ejs'); // set up ejs for templating
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -102,4 +104,4 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./app/routes.js')(app, passport, acl); // load our routes and pass in our app and fully configured passport
+require('./app/routes.js')(app, passport, acl, mongoose); // load our routes and pass in our app and fully configured passport

@@ -1,6 +1,7 @@
 var User = require('../app/models/user');
+var IMail = require('../app/models/imail');
 
-module.exports = function(app, passport, acl){
+module.exports = function(app, passport, acl, mongoose){
   require('./_loginRoutes')(app, passport)
   require('./_userRoutes')(app)
   require('./_adminRoutes')(app, acl)
@@ -17,9 +18,6 @@ module.exports = function(app, passport, acl){
 
   app.get('/', function(req, res){
 
-    var socketio = req.app.get('socketio');
-    socketio.sockets.emit('send', {message: 'urdum'});
-
     //https://stackoverflow.com/questions/14103615/mongoose-get-full-list-of-users/14103703
     User.find({}, function(err, users) {
       /*
@@ -28,39 +26,27 @@ module.exports = function(app, passport, acl){
         return err
       })
       */
-      var scope = {
-        data: {
-            title: pageTitle,
-            message: 'Hello!',
-            users: users,
-            loggedStatus: req.user
-        },
-        vue: {
-            head: {
-                title: pageTitle,
-                meta: [
-                    { property:'og:title', content: pageTitle},
-                    { name:'twitter:title', content: pageTitle}
-                ],
-                structuredData: {
-                    "@context": "http://schema.org",
-                    "@type": "Organization",
-                    "url": "http://www.your-company-site.com",
-                    "contactPoint": [{
-                        "@type": "ContactPoint",
-                        "telephone": "+1-401-555-1212",
-                        "contactType": "customer service"
-                    }]
-                }
-            },
-            components: ['users', 'messageComp'],
-            mixins: [exampleMixin]
-        }
-      }
-      res.render('index', scope)
+      res.render("index");
     })
   })
 
+  app.get('/mail/fetchimail', (req, res) => {
+    IMail.find({'recipients': { $in: [mongoose.Types.ObjectId(req.session.passport.user)] }}, (err, imails) => {
+      if (err) {
+         return res.status(400).end();
+      }
+      res.json(imails);
+    });
+  });
+
+  app.get('/mail/fetchimailcount', (req, res) => {
+    IMail.count({'recipients': { $in: [mongoose.Types.ObjectId(req.session.passport.user)] }}, (err, imails) => {
+      if (err) {
+         return res.status(400).end();
+      }
+      res.json(imails);
+    });
+  });
 }
 
 // Route middleware to make sure a user is logged in
