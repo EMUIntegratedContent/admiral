@@ -39,6 +39,7 @@
     "passport-local": "~0.1.6",
     "passport-twitter": "~1.0.2",
     "pug": "^2.0.0-rc.2",
-    "socket.io": "latest"
+    "socket.io": "latest",
+    "transporter": "0.0.1"
   }
 }
