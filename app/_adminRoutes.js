@@ -1,4 +1,5 @@
 var User         = require('./models/User')
+var usercontroller = require('./controllers/user')
 
 module.exports = function(app, acl){
 
@@ -9,34 +10,39 @@ module.exports = function(app, acl){
 
 
   //app.get('/admin/permissions', acl.middleware(), function(req,res){
-  app.get('/admin/permissions', function(req,res){
-      User.find({}, function(err, users) {
-        if(err)
-          return err;
+  app.get('/admin/users', async (req,res) =>{
 
-        var pageTitle = "Permission Center"
-        var scope = {
-            data: {
-                title: pageTitle
-            },
-            vue: {
-                head: {
-                    title: pageTitle,
-                    structuredData: {
-                        "@context": "http://schema.org",
-                        "@type": "Organization",
-                        "url": "http://www.your-company-site.com",
-                        "contactPoint": [{
-                            "@type": "ContactPoint",
-                            "telephone": "+1-401-555-1212",
-                            "contactType": "customer service"
-                        }]
-                    }
-                }
-            }
-        };
-        res.render('admin/permissions', scope)
-      })
+    try {
+      //const users = await usercontroller.getAllUsers() // Remember: getAllUsers is in the controller.
+
+      var pageTitle = "System Users"
+      var scope = {
+          data: {
+              title: pageTitle,
+              users: {},
+              value: null
+          },
+          vue: {
+              head: {
+                  title: pageTitle,
+                  structuredData: {
+                      "@context": "http://schema.org",
+                      "@type": "Organization",
+                      "url": "http://www.your-company-site.com",
+                      "contactPoint": [{
+                          "@type": "ContactPoint",
+                          "telephone": "+1-401-555-1212",
+                          "contactType": "customer service"
+                      }]
+                  }
+              },
+              components: []
+          }
+      }
+      res.render('admin/users', scope)
+    } catch (error) {
+      return res.status(500).json(error);
+    }
   });
 
 /*

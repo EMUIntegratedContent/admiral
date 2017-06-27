@@ -1,12 +1,12 @@
-var usercontroller = require('./controllers/user')
-
 var User = require('../app/models/User');
 var IMail = require('../app/models/imail');
+var usercontroller = require('./controllers/user')
 
 module.exports = function(app, passport, acl, mongoose){
   require('./_loginRoutes')(app, passport)
   require('./_userRoutes')(app)
   require('./_adminRoutes')(app, acl)
+  require('./_apiRoutes')(app)
 
   var pageTitle = 'Express Vue';
 
@@ -19,8 +19,9 @@ module.exports = function(app, passport, acl, mongoose){
   }
 
   app.get('/', async (req, res) => {
+
       try {
-        const result = await usercontroller.getAllUsers(); // Remember: getAllUsers is in the controller.
+        const result = await usercontroller.getAllUsers() // Remember: getAllUsers is in the controller.
         return res.status(200).json(result);
       } catch (error) {
         return res.status(500).json(error);

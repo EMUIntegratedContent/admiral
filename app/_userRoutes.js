@@ -1,5 +1,6 @@
 var User         = require('./models/User')
 var IMail        = require('./models/imail')
+var usercontroller = require('./controllers/user')
 
 module.exports = function(app){
 

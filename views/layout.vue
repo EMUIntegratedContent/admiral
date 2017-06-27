@@ -9,7 +9,15 @@
 
             <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
             <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
+            <!-- vue-multiselect -->
+            <style src="https://unpkg.com/vue-multiselect@2.0.0-beta.14/dist/vue-multiselect.min.css"></style>
+            <!-- vuejs -->
             <script src="https://unpkg.com/vue/dist/vue.js"></script>
+            <!-- vue-resource -->
+            <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+            <!-- vue-multiselect -->
+            <script src="https://unpkg.com/vue-multiselect@2.0.0-beta.14"></script>
+
         </head>
         <body>
           <div class="container">
