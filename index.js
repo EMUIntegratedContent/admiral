@@ -85,8 +85,7 @@ io.on('connection', function (socket) {
     });
 });
 
-
-require('./config/passport')(passport, transporter, acl); // pass passport for configuration
+require('./config/passport')(passport, transporter, acl, io); // pass passport for configuration
 
 app.use(express.static(__dirname + '/public'));
 app.engine('vue', expressVue);

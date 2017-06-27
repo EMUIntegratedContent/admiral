@@ -3,14 +3,14 @@ var LocalStrategy   = require('passport-local').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // load up the user model
-var User            = require('../app/models/user');
+var User            = require('../app/models/User');
 var IMail           = require('../app/models/imail');
 
 // load the auth variables
 var configAuth = require('./auth');
 
 // expose this function to our app using module.exports
-module.exports = function(passport, transporter, acl){
+module.exports = function(passport, transporter, acl, socketio){
 
   // =========================================================================
   // passport session setup ==================================================
@@ -83,14 +83,16 @@ module.exports = function(passport, transporter, acl){
               html: '<h2>You have just signed into Admiral for the first time.</h2><p>Following administration approval, you will receive another email allowing you to access the system.</p>' // html body
           };
           // send mail with defined transport object
-          /*
+
           transporter.sendMail(mailOptions, (error, info) => {
               if (error) {
                   return console.log(error);
               }
+
+              socketio.emit('fetchIMailCount')
+
               console.log('Message %s sent: %s', info.messageId, info.response);
           });
-          */
 
           // Send an email to all "admin-level" users to activate this user.
           acl.roleUsers('admin', function(err, users){

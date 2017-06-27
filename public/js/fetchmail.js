@@ -7,6 +7,10 @@ window.onload = function() {
     // Only when user clicks on inbox should the actual IMAILs be retrieved
     // When the inbox is closed, setinterval should cease for fetching of catual emails
 
+    socket.on('fetchIMailCount', function (data) {
+        console.log("A new mail awaiteth thee!")
+    });
+
     var mailFetcher = null,
         interval = 5000;
 
