@@ -1,12 +1,13 @@
-var User = require('../app/models/User');
-var IMail = require('../app/models/imail');
-var usercontroller = require('./controllers/user')
+const User = require('../app/models/User');
+const IMail = require('../app/models/imail');
+const usercontroller = require('./controllers/user')
+const acl = require('../authorization').getAcl()
 
-module.exports = function(app, passport, acl, mongoose){
+module.exports = function(app, passport, mongoose){
   require('./_loginRoutes')(app, passport)
   require('./_userRoutes')(app)
-  require('./_adminRoutes')(app, acl)
-  require('./_apiRoutes')(app)
+  //require('./_adminRoutes')(app, acl)
+  //require('./_apiRoutes')(app)
 
   var pageTitle = 'Express Vue';
 
@@ -18,26 +19,8 @@ module.exports = function(app, passport, acl, mongoose){
       }
   }
 
-  app.get('/', async (req, res) => {
-
-      try {
-        const result = await usercontroller.getAllUsers() // Remember: getAllUsers is in the controller.
-        return res.status(200).json(result);
-      } catch (error) {
-        return res.status(500).json(error);
-      }
-      /*
-    //https://stackoverflow.com/questions/14103615/mongoose-get-full-list-of-users/14103703
-    User.find({}, function(err, users) {
-
-      //acl.addUserRoles( req.user.id , 'admin', function(err){
-        //console.log("Role ADMIN added to user " + req.user.id + "!")
-        //return err
-      //})
-
+  app.get('/', (req, res) => {
       res.render("index");
-    })
-    */
   })
 
   app.get('/api/mail/fetchimail', (req, res) => {

@@ -68,8 +68,8 @@ window.onload = function() {
     })
 
     // Handle Imail inbox bug count
-    fetchIMailCount()
+    //fetchIMailCount()
     setInterval(() => {
-      fetchIMailCount()
+      //fetchIMailCount()
     }, interval);
 }

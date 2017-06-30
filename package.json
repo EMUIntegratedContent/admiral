@@ -8,7 +8,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js --exec babel-node --presets es2015,stage-2"
+    "start": "nodemon index.js --exec babel-node --presets es2015,stage-2",
+    "prestart": "npm run build:js",
+    "build:js": "browserify src/app.js -t vueify -p [ vueify/plugins/extract-css -o public/styles.bundle.css ] -t babelify -o public/app.bundle.js",
+    "watch:js": "watchify src/app.js -t vueify -t babelify -p browserify-hmr -p [ vueify/plugins/extract-css -o public/styles.bundle.css ] -o public/app.bundle.js",
+    "dev": "concurrently \"npm run start\" \"npm run watch:js\""
   },
   "repository": {
     "type": "git",
@@ -22,6 +26,8 @@
   "homepage": "https://github.com/danmademe/express-vue-super-simple#readme",
   "dependencies": {
     "acl": "^0.4.10",
+    "acl-mongodb": "^0.1.0",
+    "axios": "^0.16.2",
     "bcrypt-nodejs": "latest",
     "body-parser": "~1.0.0",
     "connect-flash": "~0.1.1",
@@ -54,6 +60,7 @@
     "browserify": "^14.4.0",
     "browserify-hmr": "^0.3.5",
     "concurrently": "^3.5.0",
+    "gulp": "^3.9.1",
     "vue-hot-reload-api": "^2.1.0",
     "vueify": "^9.2.4",
     "watchify": "^3.9.0"

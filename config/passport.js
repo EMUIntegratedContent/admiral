@@ -1,16 +1,17 @@
 // load all the things we need
-var LocalStrategy   = require('passport-local').Strategy;
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const LocalStrategy   = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // load up the user model
-var User            = require('../app/models/User');
-var IMail           = require('../app/models/imail');
+const User            = require('../app/models/User');
+const IMail           = require('../app/models/imail');
 
 // load the auth variables
-var configAuth = require('./auth');
+const configAuth = require('./auth');
+let acl = require('../authorization').getAcl();
 
 // expose this function to our app using module.exports
-module.exports = function(passport, transporter, acl, socketio){
+module.exports = function(passport, transporter, socketio){
 
   // =========================================================================
   // passport session setup ==================================================
@@ -64,15 +65,11 @@ module.exports = function(passport, transporter, acl, socketio){
           })
 
           // save the user
-
           newUser.save(function(err){
             if(err)
               throw err
             return done(null, newUser)
           })
-
-          // Give the new user the role of 'inactive'
-          acl.addUserRoles(newUser.id, 'inactive', function(err){})
 
           // Email a notice to the new user that they have to be accepted by an administrator.
           let mailOptions = {
@@ -83,7 +80,7 @@ module.exports = function(passport, transporter, acl, socketio){
               html: '<h2>You have just signed into Admiral for the first time.</h2><p>Following administration approval, you will receive another email allowing you to access the system.</p>' // html body
           };
           // send mail with defined transport object
-
+          /*
           transporter.sendMail(mailOptions, (error, info) => {
               if (error) {
                   return console.log(error);
@@ -93,6 +90,7 @@ module.exports = function(passport, transporter, acl, socketio){
 
               console.log('Message %s sent: %s', info.messageId, info.response);
           });
+          */
 
           // Send an email to all "admin-level" users to activate this user.
           acl.roleUsers('admin', function(err, users){

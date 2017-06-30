@@ -4,50 +4,6 @@ var usercontroller = require('./controllers/user')
 
 module.exports = function(app){
 
-  app.get('/users', function(req, res){
-    //https://stackoverflow.com/questions/14103615/mongoose-get-full-list-of-users/14103703
-
-    var pageTitle = "System Users"
-    var exampleMixin = {
-        methods: {
-            hello: function () {
-                console.log('Hello');
-            }
-        }
-    }
-
-    User.find({}, function(err, users) {
-      var scope = {
-        data: {
-            users: users,
-            loggedStatus: req.user
-        },
-        vue: {
-            head: {
-                title: pageTitle,
-                meta: [
-                    { property:'og:title', content: pageTitle},
-                    { name:'twitter:title', content: pageTitle}
-                ],
-                structuredData: {
-                    "@context": "http://schema.org",
-                    "@type": "Organization",
-                    "url": "http://www.your-company-site.com",
-                    "contactPoint": [{
-                        "@type": "ContactPoint",
-                        "telephone": "+1-401-555-1212",
-                        "contactType": "customer service"
-                    }]
-                }
-            },
-            components: ['users', 'messageComp'],
-            mixins: [exampleMixin]
-        }
-      }
-      res.render('users', scope)
-    })
-  })
-
   app.get('/users/:userName', function(req, res){
 
     User.findOne({ 'google.name' : req.params.userName }, function(err, user){
@@ -74,40 +30,7 @@ module.exports = function(app){
   });
 
   app.get('/profile', isLoggedIn, function(req, res){
-    var pageTitle = req.user.google.name + "'s Profile'"
-    var scope = {
-        data: {
-            title: pageTitle,
-            user: req.user
-        },
-        vue: {
-            head: {
-                title: pageTitle,
-                meta: [
-                    { property:'og:title', content: pageTitle},
-                    { name:'twitter:title', content: pageTitle}
-                ],
-                structuredData: {
-                    "@context": "http://schema.org",
-                    "@type": "Organization",
-                    "url": "http://www.your-company-site.com",
-                    "contactPoint": [{
-                        "@type": "ContactPoint",
-                        "telephone": "+1-401-555-1212",
-                        "contactType": "customer service"
-                    }]
-                }
-            }
-        }
-    };
-
-    res.render('user', scope)
-    /*
-    res.render('user', {
-        isAuthenticated: req.isAuthenticated,
-        user: req.user  // get the user out of session and pass to template
-    })
-    */
+    res.render('user', {isAuthenticated: req.isAuthenticated()})
   })
 }
 

@@ -10,8 +10,7 @@ const userSchema = mongoose.Schema({
         id           : String,
         token        : String,
         email        : String,
-        name         : String,
-        active       : Boolean
+        name         : String
     }
 }, {timestamps: true});
 
