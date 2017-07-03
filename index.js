@@ -37,32 +37,6 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-
-/*
-acl.addUserRoles( '594a984a9815beb8219dca22' , 'admin', function(err){
-  console.log(err)
-  //return err
-})
-
-acl.allow([
-      {
-        roles:['admin'],
-        allows:[
-            {resources:'/', permissions:'get'}
-        ]
-      }
-  ],
-  function(err){
-    //console.log("ALLOW")
-    console.log(err)
-  }
-);
-
-acl.roleUsers('admin', function(err, users){
-  //console.log("Admins:")
-  //console.log(err)
-})
-*/
 //app.listen(3000);
 server.listen(3700) // <-- socket port
 
@@ -92,12 +66,6 @@ mongoose.connection.on('connected', function(test) {
 	require('./authorization').init();
 });
 
-/*
-acl.addUserRoles( '594a984a9815beb8219dca22' , 'admin', function(err){
-  console.log(err)
-  //return err
-})
-*/
 require('./config/passport')(passport, transporter, io); // pass passport for configuration
 
 app.use(express.static(__dirname + '/public'));
