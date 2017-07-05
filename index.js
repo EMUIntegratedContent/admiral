@@ -1,9 +1,8 @@
 const path = require('path');
 const express = require('express');
-const expressVue = require('express-vue');
 const socketio = require('socket.io')(server);
 const http = require('http');
-const router         = express.Router()
+const router  = express.Router()
 
 var app = express();
 var port      = process.env.PORT || 3700
@@ -72,7 +71,6 @@ app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
-
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
@@ -85,6 +83,9 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
+const routes = require('./app/routes')(app, router, passport, mongoose)
+app.use('/', routes)
+/*
 require('./app/routes.js')(app, passport, mongoose); // load our routes and pass in our app and fully configured passport
 const adminRoutes = require('./app/_adminRoutes')(app, router)
 app.use('/admin', adminRoutes)
@@ -92,3 +93,4 @@ const rolesRoutes = require('./app/_rolesRoutes')(app, router)
 app.use('/roles', rolesRoutes)
 const apiRoutes = require('./app/_apiRoutes')(app, router)
 app.use('/api', apiRoutes)
+*/

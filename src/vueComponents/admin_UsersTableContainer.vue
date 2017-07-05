@@ -30,7 +30,7 @@
        * Fetch all system users from the API
        */
       fetchUsers(){
-        axios.get('/api/users/all')
+        axios.get('/api/user/all')
           .then( ({ data: users }) => {
             console.log(users)
             this.users = users
@@ -41,7 +41,7 @@
        * Determine if the user has a given permission
        */
       hasRole(role){
-        axios.get('/api/user/hasRole', { role: role })
+        axios.get('/api/admin/hasRole', { role: role })
           .then( (response) => {
             this.canDelete = response.data
           })
