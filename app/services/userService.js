@@ -3,7 +3,21 @@ import User from '../models/User'
 const acl = require('../../authorization').getAcl()
 
 export function getAllUsers(){
-    return User.find({}).exec() //returns a promise
+  return User.find({}).exec().then( (users) => {
+    if(!users)
+      throw new Error('No users found.')
+
+    return users
+  }) //returns a promise
+}
+
+export function getUserByName(userName){
+  return User.findOne({'google.name' : userName}).exec().then( (user) => {
+    if(!user)
+      throw new Error('No user found with that name.')
+
+    return user
+  }) //returns a promise
 }
 
 export function deactivateUser(userId){

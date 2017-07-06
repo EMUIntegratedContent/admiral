@@ -11,7 +11,7 @@ const configAuth = require('./auth');
 let acl = require('../authorization').getAcl();
 
 // expose this function to our app using module.exports
-module.exports = function(passport, transporter, socketio){
+module.exports = function(app, passport, transporter, socketio, jwt){
 
   // =========================================================================
   // passport session setup ==================================================
@@ -50,7 +50,13 @@ module.exports = function(passport, transporter, socketio){
           return done(err)
 
         if(user){
-          // if a user is found log user in
+          // if a user is found
+          // generate JWT token
+          let jwttoken = jwt.sign(user, app.get('superSecret'), {
+            expiresIn : 60*60*24 // expires in 24 hours
+          })
+          console.log(jwttoken)
+          // log user in
           return done(null, user)
         } else {
 

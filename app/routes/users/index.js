@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const api_users = require('./api')
+const userController = require('../../controllers/api/apiUserController')
 
-router.get('/', api_users.getAllUsers)
+router.get('/', userController.getAllUsers)
 
 module.exports = router

@@ -1,20 +1,7 @@
 const router = require('express').Router();
-const api_admin = require('./api')
-
-const User           = require('../../models/User')
-const userController = require('../../controllers/user')
+const userController = require('../../controllers/userController')
 const acl = require('../../../authorization').getAcl()
 const utils = require('../../utils/utilities')
-
-// define the home page route
-router.get('/users', acl.middleware(1, utils.getUserId, 'view'), async (req, res) => {
-  try {
-    const result = await userController.getAllUsers() // Remember: getAllUsers is in the controller.
-    res.render("admin/users");
-  } catch (error) {
-    return res.status(500).json(error);
-  }
-})
 
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
@@ -31,8 +18,23 @@ router.get('/', acl.middleware(1, utils.getUserId, 'view'), function (req, res) 
   res.send("ADMIN HOME")
 })
 
+router.get('/users', acl.middleware(1, utils.getUserId, 'view'), (req, res) => {
+//router.get('/users', (req, res) => {
+  res.render("admin/users");
+})
+
+router.get('/user/:username/edit', acl.middleware(1, utils.getUserId, 'edit'), async (req, res) => {
+  try{
+    const user = await userController.getUserByName(req.params.username)
+    res.render("admin/users/edit", { user: user});
+  } catch(error) {
+    res.status(404).render('404')
+  }
+
+})
+
 router.post('/user/deactivate', acl.middleware(1, utils.getUserId, 'get'), async (req, res) =>{
-  return await api_admin.deactivateUser()
+  return await userController.deactivateUser()
 })
 
 module.exports = router

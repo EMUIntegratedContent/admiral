@@ -32,7 +32,6 @@
       fetchUsers(){
         axios.get('/api/user/all')
           .then( ({ data: users }) => {
-            console.log(users)
             this.users = users
           })
       },
@@ -41,7 +40,7 @@
        * Determine if the user has a given permission
        */
       hasRole(role){
-        axios.get('/api/admin/hasRole', { role: role })
+        axios.post('/api/admin/hasRole', { role: role })
           .then( (response) => {
             this.canDelete = response.data
           })

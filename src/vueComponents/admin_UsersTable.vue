@@ -5,8 +5,8 @@
   <table class="stack" id="users-table">
     <thead>
       <tr>
-        <th>Email</th>
         <th>Name</th>
+        <th>Email</th>
         <th>Level</th>
         <th>Last Login</th>
         <th v-show="canDelete">Active</th>
@@ -14,8 +14,8 @@
     </thead>
     <tbody>
       <tr v-for="user in users">
+        <td><a :href="'user/' + user.google.name + '/edit'">{{user.google.name}}</a></td>
         <td>{{user.google.email}}</td>
-        <td>{{user.google.name}}</td>
         <td></td>
         <td></td>
         <td v-show="canDelete">

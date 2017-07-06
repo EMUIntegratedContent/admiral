@@ -10,6 +10,7 @@ var mongoose  = require('mongoose')
 var passport  = require('passport')
 var flash     = require('connect-flash')
 var nodemon   = require('gulp-nodemon');
+var jwt       = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
 var morgan       = require('morgan')
 var cookieParser = require('cookie-parser')
@@ -65,7 +66,8 @@ mongoose.connection.on('connected', function(test) {
 	require('./authorization').init();
 });
 
-require('./config/passport')(passport, transporter, io); // pass passport for configuration
+app.set('superSecret', 'ilovescotchscotchyscotchscotch'); // session secret
+require('./config/passport')(app, passport, transporter, io, jwt); // pass passport for configuration
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
@@ -85,12 +87,3 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 // routes ======================================================================
 const routes = require('./app/routes')(app, router, passport, mongoose)
 app.use('/', routes)
-/*
-require('./app/routes.js')(app, passport, mongoose); // load our routes and pass in our app and fully configured passport
-const adminRoutes = require('./app/_adminRoutes')(app, router)
-app.use('/admin', adminRoutes)
-const rolesRoutes = require('./app/_rolesRoutes')(app, router)
-app.use('/roles', rolesRoutes)
-const apiRoutes = require('./app/_apiRoutes')(app, router)
-app.use('/api', apiRoutes)
-*/
