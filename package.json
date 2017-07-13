@@ -1,7 +1,7 @@
 {
-  "name": "express-vue-super-simple",
+  "name": "Admiral",
   "version": "1.0.0",
-  "description": "super simple example for express-vue",
+  "description": "EMU Admin Management System",
   "main": "index.js",
   "directories": {
     "example": "examples"
@@ -18,7 +18,7 @@
     "type": "git",
     "url": "git+https://github.com/danmademe/express-vue-super-simple.git"
   },
-  "author": "Daniel Cherubini",
+  "author": "Chris Puzzuoli - EMU Integrated Content",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/danmademe/express-vue/issues"
@@ -33,6 +33,7 @@
     "connect-flash": "~0.1.1",
     "cookie-parser": "~1.0.0",
     "ejs": "^2.5.6",
+    "event-stream": "^3.3.4",
     "express": "^4.15.2",
     "express-session": "~1.0.0",
     "express-vue": "^3.14.2",
@@ -48,7 +49,8 @@
     "passport-local": "~0.1.6",
     "passport-twitter": "~1.0.2",
     "pug": "^2.0.0-rc.2",
-    "socket.io": "latest"
+    "socket.io": "latest",
+    "vinyl-source-stream": "^1.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
