@@ -1,15 +1,20 @@
 <% include partials/header %>
 
-<div>
+<div class="row">
+  <div class="small-12 columns">
     <h1>My Profile Page</h1>
     <p>User</p>
-
-    <% if (!isAuthenticated) { %>
-  <a id="signIn" href="/login">Sign In</a>
+  </div>
+</div>
+<div class="row">
+  <div class="small-12 columns">
+  <% if (!isAuthenticated) { %>
+    <a id="signIn" href="/login">Sign In</a>
   <% } else { %>
-      <h3 id="welcomeMsg"><%=user.id%></h3>
-      <a href="/logout">Log Out</a>
+    <a href="/logout">Log Out</a>
   <% } %>
+  </div>
 </div>
 
+<!--<script src="app.bundle.js"></script>-->
 <% include partials/footer %>

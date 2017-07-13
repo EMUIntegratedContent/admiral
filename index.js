@@ -1,8 +1,8 @@
 const path = require('path');
 const express = require('express');
-const expressVue = require('express-vue');
 const socketio = require('socket.io')(server);
 const http = require('http');
+const router  = express.Router()
 
 var app = express();
 var port      = process.env.PORT || 3700
@@ -10,6 +10,7 @@ var mongoose  = require('mongoose')
 var passport  = require('passport')
 var flash     = require('connect-flash')
 var nodemon   = require('gulp-nodemon');
+var jwt       = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
 var morgan       = require('morgan')
 var cookieParser = require('cookie-parser')
@@ -19,9 +20,8 @@ var nodemailer   = require('nodemailer')
 
 var configDB = require('./config/database.js')
 
-var acl = require('acl')
-
 // configuration ===============================================================
+
 // Attach Socket.io
 var server = http.createServer(app);
 var io = socketio.listen(server)
@@ -37,31 +37,7 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-var dbConn = mongoose.connect(configDB.url); // connect to our database
-
-
-acl = new acl(new acl.mongodbBackend(mongoose.connection.db, 'acl_'));
-/*
-acl.allow([
-      {
-        roles:['admin'],
-        allows:[
-            {resources:'/admin', permissions:'get'}
-        ]
-      }
-  ],
-  function(err){
-    console.log("ALLOW")
-    //console.log(err)
-  }
-);
-
-acl.roleUsers('admin', function(err, users){
-  console.log("Admins:")
-  console.log(err)
-})
-*/
-app.listen(3000);
+//app.listen(3000);
 server.listen(3700) // <-- socket port
 
 io.on('connection', function (socket) {
@@ -85,12 +61,17 @@ io.on('connection', function (socket) {
     });
 });
 
+mongoose.connect(configDB.url); // connect to our database
+mongoose.connection.on('connected', function(test) {
+	require('./authorization').init();
+});
 
-require('./config/passport')(passport, transporter, acl); // pass passport for configuration
+app.set('superSecret', 'ilovescotchscotchyscotchscotch'); // session secret
+require('./config/passport')(app, passport, transporter, io, jwt); // pass passport for configuration
 
-//app.set('views', __dirname + '/tpl');
 app.use(express.static(__dirname + '/public'));
-app.set('view engine', 'ejs'); // set up ejs for templating
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
 
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
@@ -104,4 +85,5 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 // routes ======================================================================
-require('./app/routes.js')(app, passport, acl, mongoose); // load our routes and pass in our app and fully configured passport
+const routes = require('./app/routes')(app, router, passport, mongoose)
+app.use('/', routes)

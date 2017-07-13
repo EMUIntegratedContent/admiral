@@ -1,17 +1,18 @@
 // load the things we need
-var mongoose = require('mongoose');
-var bcrypt   = require('bcrypt-nodejs');
+const mongoose = require('mongoose');
+const bcrypt   = require('bcrypt-nodejs');
+
+import * as validator from './validate'
 
 // define the schema for our user model
-var userSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
     google           : {
         id           : String,
         token        : String,
         email        : String,
-        name         : String,
-        active       : Boolean
+        name         : String
     }
-});
+}, {timestamps: true});
 
 /*
 // methods ======================
@@ -27,4 +28,5 @@ userSchema.methods.validPassword = function(password) {
 */
 
 // create the model for users and expose it to our app
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema)
+module.exports = User

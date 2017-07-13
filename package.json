@@ -1,34 +1,44 @@
 {
-  "name": "express-vue-super-simple",
+  "name": "Admiral",
   "version": "1.0.0",
-  "description": "super simple example for express-vue",
+  "description": "EMU Admin Management System",
   "main": "index.js",
   "directories": {
     "example": "examples"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "VUE_ENV=server node index.js"
+    "start": "nodemon index.js --exec babel-node --presets es2015,stage-2",
+    "prestart": "npm run build:js",
+    "build:js": "browserify src/app.js -t vueify -p [ vueify/plugins/extract-css -o public/styles.bundle.css ] -t babelify -o public/app.bundle.js",
+    "watch:js": "watchify src/app.js -t vueify -t babelify -p browserify-hmr -p [ vueify/plugins/extract-css -o public/styles.bundle.css ] -o public/app.bundle.js",
+    "dev": "concurrently \"npm run start\" \"npm run watch:js\""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/danmademe/express-vue-super-simple.git"
   },
-  "author": "Daniel Cherubini",
+  "author": "Chris Puzzuoli - EMU Integrated Content",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/danmademe/express-vue/issues"
   },
   "homepage": "https://github.com/danmademe/express-vue-super-simple#readme",
   "dependencies": {
+    "acl": "^0.4.10",
+    "acl-mongodb": "^0.1.0",
+    "axios": "^0.16.2",
     "bcrypt-nodejs": "latest",
     "body-parser": "~1.0.0",
     "connect-flash": "~0.1.1",
     "cookie-parser": "~1.0.0",
     "ejs": "^2.5.6",
+    "event-stream": "^3.3.4",
     "express": "^4.15.2",
     "express-session": "~1.0.0",
     "express-vue": "^3.14.2",
+    "gulp-nodemon": "^2.2.1",
+    "jsonwebtoken": "^7.4.1",
     "method-override": "~1.0.0",
     "mongoose": "~3.8.1",
     "morgan": "~1.0.0",
@@ -40,6 +50,26 @@
     "passport-twitter": "~1.0.2",
     "pug": "^2.0.0-rc.2",
     "socket.io": "latest",
+<<<<<<< HEAD
     "transporter": "0.0.1"
+=======
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-runtime": "^6.23.0",
+    "babelify": "^7.3.0",
+    "browserify": "^14.4.0",
+    "browserify-hmr": "^0.3.5",
+    "concurrently": "^3.5.0",
+    "gulp": "^3.9.1",
+    "vue-hot-reload-api": "^2.1.0",
+    "vueify": "^9.2.4",
+    "watchify": "^3.9.0"
+>>>>>>> vue
   }
 }

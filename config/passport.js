@@ -1,16 +1,17 @@
 // load all the things we need
-var LocalStrategy   = require('passport-local').Strategy;
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const LocalStrategy   = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // load up the user model
-var User            = require('../app/models/user');
-var IMail           = require('../app/models/imail');
+const User            = require('../app/models/User');
+const IMail           = require('../app/models/imail');
 
 // load the auth variables
-var configAuth = require('./auth');
+const configAuth = require('./auth');
+let acl = require('../authorization').getAcl();
 
 // expose this function to our app using module.exports
-module.exports = function(passport, transporter, acl){
+module.exports = function(app, passport, transporter, socketio, jwt){
 
   // =========================================================================
   // passport session setup ==================================================
@@ -49,7 +50,13 @@ module.exports = function(passport, transporter, acl){
           return done(err)
 
         if(user){
-          // if a user is found log user in
+          // if a user is found
+          // generate JWT token
+          let jwttoken = jwt.sign(user, app.get('superSecret'), {
+            expiresIn : 60*60*24 // expires in 24 hours
+          })
+          console.log(jwttoken)
+          // log user in
           return done(null, user)
         } else {
 
@@ -64,15 +71,11 @@ module.exports = function(passport, transporter, acl){
           })
 
           // save the user
-
           newUser.save(function(err){
             if(err)
               throw err
             return done(null, newUser)
           })
-
-          // Give the new user the role of 'inactive'
-          acl.addUserRoles(newUser.id, 'inactive', function(err){})
 
           // Email a notice to the new user that they have to be accepted by an administrator.
           let mailOptions = {
@@ -88,6 +91,9 @@ module.exports = function(passport, transporter, acl){
               if (error) {
                   return console.log(error);
               }
+
+              socketio.emit('fetchIMailCount')
+
               console.log('Message %s sent: %s', info.messageId, info.response);
           });
           */
