@@ -4,7 +4,7 @@
 <template>
   <div class="row">
     <div class="small-12 columns">
-      <Admin-Users-Table :users='users' :canDelete='canDelete'></Admin-Users-Table>
+      <Admin-Users-Table :users='users' :can_delete='canDelete'></Admin-Users-Table>
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@
     name: 'AdminUsersTableContainer',
     data: () => ({
       users: {},
-      canDelete: false
+      can_delete: false
     }),
     mounted() {
       this.fetchUsers()
@@ -42,7 +42,7 @@
       hasRole(role){
         axios.post('/api/admin/hasRole', { role: role })
           .then( (response) => {
-            this.canDelete = response.data
+            this.can_delete = response.data
           })
       }
     }

@@ -10,16 +10,16 @@ router.use(function timeLog (req, res, next) {
 })
 
 // define the home page route
-router.get('/', acl.middleware(1, utils.getUserId, 'view'), function (req, res) {
-//router.get('/', function (req, res) {
+// router.get('/', acl.middleware(1, utils.getUserId, 'view'), function (req, res) {
+router.get('/', function (req, res) {
   //console.log(utils.getUserId())
   //acl.removeUserRoles(req.user.id, 'powerpf', function(err){})
   //acl.addUserRoles(req.user.id, 'admin', function(err){})
   res.send("ADMIN HOME")
 })
 
-router.get('/users', acl.middleware(1, utils.getUserId, 'view'), (req, res) => {
-//router.get('/users', (req, res) => {
+// router.get('/users', acl.middleware(1, utils.getUserId, 'view'), (req, res) => {
+router.get('/users', (req, res) => {
   res.render("admin/users");
 })
 
