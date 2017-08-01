@@ -2,6 +2,8 @@
 </style>
 
 <template>
+<div>
+  <admin-user-modal></admin-user-modal>
   <table class="stack" id="users-table">
     <thead>
       <tr>
@@ -14,7 +16,8 @@
     </thead>
     <tbody>
       <tr v-for="user in users">
-        <td><a :href="'user/' + user.google.name + '/edit'">{{user.google.name}}</a></td>
+        <!--<td><a :href="'user/' + user.google.name + '/edit'">{{user.google.name}}</a></td>-->
+        <td><span @click="showModal = true">{{user.google.name}}</span></td>
         <td>{{user.google.email}}</td>
         <td></td>
         <td></td>
@@ -24,21 +27,25 @@
       </tr>
     </tbody>
   </table>
+</div>
 </template>
 
 <script>
   import axios from 'axios'
+  import AdminUserModal from './admin_UserModal.vue'
   export default {
     name: 'AdminUsersTable',
     data: () => ({
-      is_active: false
+      is_active: false,
+      showModal: true,
+      three: 3
     }),
     props: ['users', 'canDelete'],
     mounted() {
 
     },
     components: {
-
+      AdminUserModal,
     },
     methods: {
       // Toggles a user's status from (in)active to (in)active

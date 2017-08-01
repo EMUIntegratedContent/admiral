@@ -183,8 +183,8 @@ module.exports = function xhrAdapter(config) {
   });
 };
 
-}).call(this,require("pBGvAp"))
-},{"../core/createError":9,"./../core/settle":12,"./../helpers/btoa":16,"./../helpers/buildURL":17,"./../helpers/cookies":19,"./../helpers/isURLSameOrigin":21,"./../helpers/parseHeaders":23,"./../utils":25,"pBGvAp":27}],3:[function(require,module,exports){
+}).call(this,require("7YKIPe"))
+},{"../core/createError":9,"./../core/settle":12,"./../helpers/btoa":16,"./../helpers/buildURL":17,"./../helpers/cookies":19,"./../helpers/isURLSameOrigin":21,"./../helpers/parseHeaders":23,"./../utils":25,"7YKIPe":26}],3:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -736,8 +736,8 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-}).call(this,require("pBGvAp"))
-},{"./adapters/http":2,"./adapters/xhr":2,"./helpers/normalizeHeaderName":22,"./utils":25,"pBGvAp":27}],15:[function(require,module,exports){
+}).call(this,require("7YKIPe"))
+},{"./adapters/http":2,"./adapters/xhr":2,"./helpers/normalizeHeaderName":22,"./utils":25,"7YKIPe":26}],15:[function(require,module,exports){
 'use strict';
 
 module.exports = function bind(fn, thisArg) {
@@ -1402,30 +1402,7 @@ module.exports = {
   trim: trim
 };
 
-},{"./helpers/bind":15,"is-buffer":26}],26:[function(require,module,exports){
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
- * @license  MIT
- */
-
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
-}
-
-},{}],27:[function(require,module,exports){
+},{"./helpers/bind":15,"is-buffer":27}],26:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -1489,6 +1466,29 @@ process.cwd = function () { return '/' };
 process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
+
+},{}],27:[function(require,module,exports){
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @license  MIT
+ */
+
+// The _isBuffer check is for Safari 5-7 support, because it's missing
+// Object.prototype.constructor. Remove this eventually
+module.exports = function (obj) {
+  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
+}
+
+function isBuffer (obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+// For Node v0.10 support. Remove this eventually.
+function isSlowBuffer (obj) {
+  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
+}
 
 },{}],28:[function(require,module,exports){
 var Vue // late bind
@@ -19150,8 +19150,8 @@ setTimeout(function () {
 
 module.exports = Vue$3;
 
-}).call(this,require("pBGvAp"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"pBGvAp":27}],31:[function(require,module,exports){
+}).call(this,require("7YKIPe"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"7YKIPe":26}],31:[function(require,module,exports){
 var inserted = exports.cache = {}
 
 exports.insert = function (css) {
@@ -19190,7 +19190,7 @@ new _vue2.default({
     return createElement(_admin_UsersTableContainer2.default);
   }
 });
-},{"./vueComponents/admin_UsersTableContainer.vue":34,"vue/dist/vue.js":29}],33:[function(require,module,exports){
+},{"./vueComponents/admin_UsersTableContainer.vue":35,"vue/dist/vue.js":29}],33:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n")
 'use strict';
@@ -19206,16 +19206,77 @@ var _axios2 = _interopRequireDefault(_axios);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
+  name: 'AdminUserModal',
+  data: function data() {
+    return {};
+  },
+  props: [],
+  mounted: function mounted() {},
+
+  components: {},
+  methods: {
+    // Toggles a user's status from (in)active to (in)active
+    /*
+    toggleActive(userId){
+      axios.post('/api/user/deactivate', { userId: userId })
+        .then((response) => {
+          console.log(response)
+          this.is_active === true ? this.is_active = false : this.is_active = true
+        })
+    }
+    */
+  }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n  <p>He says it used to be a farm before the motor law.</p>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  module.hot.dispose(function () {
+    __vueify_insert__.cache["\n"] = false
+    document.head.removeChild(__vueify_style__)
+  })
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-651fa436", module.exports)
+  } else {
+    hotAPI.update("_v-651fa436", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"axios":1,"vue":30,"vue-hot-reload-api":28,"vueify/lib/insert-css":31}],34:[function(require,module,exports){
+var __vueify_insert__ = require("vueify/lib/insert-css")
+var __vueify_style__ = __vueify_insert__.insert("\n")
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _axios = require('axios');
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _admin_UserModal = require('./admin_UserModal.vue');
+
+var _admin_UserModal2 = _interopRequireDefault(_admin_UserModal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   name: 'AdminUsersTable',
   data: function data() {
     return {
-      is_active: false
+      is_active: false,
+      showModal: true,
+      three: 3
     };
   },
   props: ['users', 'canDelete'],
   mounted: function mounted() {},
 
-  components: {},
+  components: {
+    AdminUserModal: _admin_UserModal2.default
+  },
   methods: {
     // Toggles a user's status from (in)active to (in)active
     toggleActive: function toggleActive(userId) {
@@ -19229,7 +19290,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<table class=\"stack\" id=\"users-table\">\n  <thead>\n    <tr>\n      <th>Name</th>\n      <th>Email</th>\n      <th>Level</th>\n      <th>Last Login</th>\n      <th v-show=\"canDelete\">Active</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr v-for=\"user in users\">\n      <td><a :href=\"'user/' + user.google.name + '/edit'\">{{user.google.name}}</a></td>\n      <td>{{user.google.email}}</td>\n      <td></td>\n      <td></td>\n      <td v-show=\"canDelete\">\n        <input type=\"checkbox\" v-model=\"is_active\" @click=\"toggleActive(user._id)\">\n      </td>\n    </tr>\n  </tbody>\n</table>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n  <admin-user-modal></admin-user-modal>\n  <table class=\"stack\" id=\"users-table\">\n    <thead>\n      <tr>\n        <th>Name</th>\n        <th>Email</th>\n        <th>Level</th>\n        <th>Last Login</th>\n        <th v-show=\"canDelete\">Active</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr v-for=\"user in users\">\n        <!--<td><a :href=\"'user/' + user.google.name + '/edit'\">{{user.google.name}}</a></td>-->\n        <td><span @click=\"showModal = true\">{{user.google.name}}</span></td>\n        <td>{{user.google.email}}</td>\n        <td></td>\n        <td></td>\n        <td v-show=\"canDelete\">\n          <input type=\"checkbox\" v-model=\"is_active\" @click=\"toggleActive(user._id)\">\n        </td>\n      </tr>\n    </tbody>\n  </table>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -19239,12 +19300,12 @@ if (module.hot) {(function () {  module.hot.accept()
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
-    hotAPI.createRecord("_v-1cd2e786", module.exports)
+    hotAPI.createRecord("_v-42a5f67c", module.exports)
   } else {
-    hotAPI.update("_v-1cd2e786", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+    hotAPI.update("_v-42a5f67c", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"axios":1,"vue":30,"vue-hot-reload-api":28,"vueify/lib/insert-css":31}],34:[function(require,module,exports){
+},{"./admin_UserModal.vue":33,"axios":1,"vue":30,"vue-hot-reload-api":28,"vueify/lib/insert-css":31}],35:[function(require,module,exports){
 var __vueify_insert__ = require("vueify/lib/insert-css")
 var __vueify_style__ = __vueify_insert__.insert("\n")
 'use strict';
@@ -19268,7 +19329,7 @@ exports.default = {
   data: function data() {
     return {
       users: {},
-      can_delete: false
+      canDelete: false
     };
   },
   mounted: function mounted() {
@@ -19307,7 +19368,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\">\n  <div class=\"small-12 columns\">\n    <admin-users-table :users=\"users\" :can_delete=\"canDelete\"></admin-users-table>\n  </div>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"row\">\n  <div class=\"small-12 columns\">\n    <admin-users-table :users=\"users\" :can-delete=\"canDelete\"></admin-users-table>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -19317,9 +19378,9 @@ if (module.hot) {(function () {  module.hot.accept()
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
-    hotAPI.createRecord("_v-b3359318", module.exports)
+    hotAPI.createRecord("_v-693d838f", module.exports)
   } else {
-    hotAPI.update("_v-b3359318", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+    hotAPI.update("_v-693d838f", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./admin_UsersTable.vue":33,"axios":1,"vue":30,"vue-hot-reload-api":28,"vueify/lib/insert-css":31}]},{},[32])
+},{"./admin_UsersTable.vue":34,"axios":1,"vue":30,"vue-hot-reload-api":28,"vueify/lib/insert-css":31}]},{},[32])

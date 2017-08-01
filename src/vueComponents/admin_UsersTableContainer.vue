@@ -4,7 +4,7 @@
 <template>
   <div class="row">
     <div class="small-12 columns">
-      <Admin-Users-Table :users='users' :can_delete='canDelete'></Admin-Users-Table>
+      <admin-users-table :users='users' :can-delete='canDelete'></admin-users-table>
     </div>
   </div>
 </template>
@@ -16,7 +16,7 @@
     name: 'AdminUsersTableContainer',
     data: () => ({
       users: {},
-      can_delete: false
+      canDelete: false
     }),
     mounted() {
       this.fetchUsers()
