@@ -37,7 +37,7 @@
     name: 'AdminUsersTable',
     data: () => ({
       is_active: false,
-      showModal: true,
+      showModal: false,
       three: 3
     }),
     props: ['users', 'canDelete'],

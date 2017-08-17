@@ -19228,7 +19228,7 @@ exports.default = {
   }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n  <p>He says it used to be a farm before the motor law.</p>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n  <p><button class=\"button\" data-open=\"exampleModal1\">Click me for a modal</button></p>\n  <div class=\"reveal\" id=\"exampleModal1\" data-reveal=\"\">\n    <h1>Awesome. I Have It.</h1>\n    <p class=\"lead\">Your couch. It is mine.</p>\n    <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>\n    <button class=\"close-button\" data-close=\"\" aria-label=\"Close modal\" type=\"button\">\n      <span aria-hidden=\"true\">×</span>\n    </button>\n  </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
